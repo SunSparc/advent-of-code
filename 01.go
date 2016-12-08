@@ -13,16 +13,22 @@ type Coordinate struct {
 	y int
 }
 
+var previousLocations []Coordinate
+var startingLocation Coordinate
+var currentLocation Coordinate
+
 func main() {
 	directions := []string{"R1", "R3", "L2", "L5", "L2", "L1", "R3", "L4", "R2", "L2", "L4", "R2", "L1", "R1", "L2", "R3", "L1", "L4", "R2", "L5", "R3", "R4", "L1", "R2", "L1", "R3", "L4", "R5", "L4", "L5", "R5", "L3", "R2", "L3", "L3", "R1", "R3", "L4", "R2", "R5", "L4", "R1", "L1", "L1", "R5", "L2", "R1", "L2", "R188", "L5", "L3", "R5", "R1", "L2", "L4", "R3", "R5", "L3", "R3", "R45", "L4", "R4", "R72", "R2", "R3", "L1", "R1", "L1", "L1", "R192", "L1", "L1", "L1", "L4", "R1", "L2", "L5", "L3", "R5", "L3", "R3", "L4", "L3", "R1", "R4", "L2", "R2", "R3", "L5", "R3", "L1", "R1", "R4", "L2", "L3", "R1", "R3", "L4", "L3", "L4", "L2", "L2", "R1", "R3", "L5", "L1", "R4", "R2", "L4", "L1", "R3", "R3", "R1", "L5", "L2", "R4", "R4", "R2", "R1", "R5", "R5", "L4", "L1", "R5", "R3", "R4", "R5", "R3", "L1", "L2", "L4", "R1", "R4", "R5", "L2", "L3", "R4", "L4", "R2", "L2", "L4", "L2", "R5", "R1", "R4", "R3", "R5", "L4", "L4", "L5", "L5", "R3", "R4", "L1", "L3", "R2", "L2", "R1", "L3", "L5", "R5", "R5", "R3", "L4", "L2", "R4", "R5", "R1", "R4", "L3"} // 307
 	// directions := []string{"R2", "L3"} // = 5 block
 	// directions := []string{"R2", "R2", "R2"} // = 2 blocks
 	// directions := []string{"R5", "L5", "R5", "R3"} // = 12 blocks
-	// directions := []string{"R1", "L2", "L6", "R1", "L2", "R1", "L2", "R1", "L2"}
+	// directions := []string{"R1", "L2", "L1", "L2", "L6", "R1", "L2", "R1", "L2", "R1", "L2"}
+	fmt.Println("Directions:", directions)
 
-	startingLocation := Coordinate{0, 0}
-	currentLocation := startingLocation
+	startingLocation = Coordinate{0, 0}
+	currentLocation = startingLocation
 	currentOrientation := NORTH
+	// previousLocations = append(previousLocations, startingLocation)
 
 	for _, step := range directions {
 
@@ -47,30 +53,66 @@ func main() {
 
 		switch currentOrientation {
 		case NORTH:
+			localLocation := currentLocation
+			for x := 0; x < numberOfBlocks; x++ {
+				findMatchingLocation(localLocation)
+				previousLocations = append(previousLocations, localLocation)
+				localLocation.y = localLocation.y + 1
+			}
 			currentLocation.y = currentLocation.y + numberOfBlocks
 		case EAST:
+			localLocation := currentLocation
+			for x := 0; x < numberOfBlocks; x++ {
+				findMatchingLocation(localLocation)
+				previousLocations = append(previousLocations, localLocation)
+				localLocation.x = localLocation.x + 1
+			}
 			currentLocation.x = currentLocation.x + numberOfBlocks
 		case SOUTH:
+			localLocation := currentLocation
+			for x := 0; x < numberOfBlocks; x++ {
+				findMatchingLocation(localLocation)
+				previousLocations = append(previousLocations, localLocation)
+				localLocation.y = localLocation.y - 1
+			}
 			currentLocation.y = currentLocation.y - numberOfBlocks
 		case WEST:
+			localLocation := currentLocation
+			for x := 0; x < numberOfBlocks; x++ {
+				findMatchingLocation(localLocation)
+				previousLocations = append(previousLocations, localLocation)
+				localLocation.x = localLocation.x - 1
+			}
 			currentLocation.x = currentLocation.x - numberOfBlocks
 		}
 	}
 	fmt.Println("currentLocation:", currentLocation)
 
+	fmt.Println("distance:", findDistance(startingLocation, currentLocation))
+}
+
+func findDistance(start, end Coordinate) int {
 	first, second := 0, 0
 	// Taxicab Equation: d = |x2 - x1| + |y2 - y1|
-	if currentLocation.x > startingLocation.x {
-		first = currentLocation.x - startingLocation.x
+	if end.x > start.x {
+		first = end.x - start.x
 	} else {
-		first = startingLocation.x - currentLocation.x
+		first = start.x - end.x
 	}
-	if currentLocation.y > startingLocation.y {
-		second = currentLocation.y - startingLocation.y
+	if end.y > start.y {
+		second = end.y - start.y
 	} else {
-		second = startingLocation.y - currentLocation.y
+		second = start.y - end.y
 	}
-	fmt.Println("distance:", first+second)
+	return first + second
+}
+
+func findMatchingLocation(newLocation Coordinate) {
+	for _, location := range previousLocations {
+		if location == newLocation {
+			fmt.Println("we have been here before", findDistance(startingLocation, location))
+		}
+	}
 }
 
 const (

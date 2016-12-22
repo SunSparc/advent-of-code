@@ -1,4 +1,4 @@
-package Day2
+package day02
 
 import (
 	"testing"
@@ -8,22 +8,22 @@ import (
 )
 
 
-type Day2Fixture struct {
+type Day02Fixture struct {
 	*gunit.Fixture
 	security *BathroomSecurity
 }
 
-func TestDay2Fixture(t *testing.T) {
-	gunit.Run(new(Day2Fixture), t)
+func TestDay02Fixture(t *testing.T) {
+	gunit.Run(new(Day02Fixture), t)
 }
 
-func (this *Day2Fixture) Setup() {
+func (this *Day02Fixture) Setup() {
 	this.security = NewBathroomSecurity()
 }
 
 var buttons int
 
-func (this *Day2Fixture) Test_OneLine_OneCharacterInstructions() {
+func (this *Day02Fixture) Test_OneLine_OneCharacterInstructions() {
 	buttons = this.security.PushButtons("")
 	this.So(buttons, should.Equal, 0)
 
@@ -40,7 +40,7 @@ func (this *Day2Fixture) Test_OneLine_OneCharacterInstructions() {
 	this.So(buttons, should.Equal, 6)
 }
 
-func (this *Day2Fixture) Test_OneLine_TwoCharacterInstructions() {
+func (this *Day02Fixture) Test_OneLine_TwoCharacterInstructions() {
 	buttons = this.security.PushButtons("UL")
 	this.So(buttons, should.Equal, 1)
 	buttons = this.security.PushButtons("LU")

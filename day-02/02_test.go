@@ -142,11 +142,6 @@ func (this *Day02Fixture) Test_ThePuzzleInput() {
 
 // http://adventofcode.com/2016/day/2
 
-// -------------- Design ---------------
-// number pad
-// button pusher
-// button pusher mover
-
 // --- Day 2: Bathroom Security ---
 
 // You arrive at Easter Bunny Headquarters under cover of darkness. However, you left in such a rush that you forgot to

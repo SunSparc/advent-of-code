@@ -1,22 +1,13 @@
 package day02
 
 
-type Keypad [3][3]int
-
 type BathroomSecurity struct {
-	keypad Keypad
 	start int
 	current int
 }
 
 func NewBathroomSecurity() *BathroomSecurity {
-	keypad := Keypad{
-		[3]int{1,2,3},
-		[3]int{4,5,6},
-		[3]int{7,8,9},
-	}
 	return &BathroomSecurity{
-		keypad: keypad,
 		start: 5,
 		current: 5,
 	}
@@ -24,40 +15,22 @@ func NewBathroomSecurity() *BathroomSecurity {
 
 
 func (this *BathroomSecurity) PushButtons(instructions string) int {
-	if instructions == "U" {
-		this.up()
-		return this.current
-	} else if instructions == "D" {
-		this.down()
-		return this.current
-	} else if instructions == "L" {
-		this.left()
-		return this.current
-	} else if instructions == "R" {
-		this.right()
-		return this.current
-	} else if instructions == "UL" {
-		this.up()
-		this.left()
-		return this.current
-	} else if instructions == "LU" {
-		this.left()
-		this.up()
-		return this.current
-	} else if instructions == "DL" {
-		this.down()
-		this.left()
-		return this.current
-	} else if instructions == "RU" {
-		this.right()
-		this.up()
-		return this.current
-	} else if instructions == "RD" {
-		this.right()
-		this.down()
-		return 9
+	if instructions == "" {
+		return 0
 	}
-	return 0
+	for _, direction := range instructions {
+		switch string(direction) {
+		case "U":
+			this.up()
+		case "D":
+			this.down()
+		case "L":
+			this.left()
+		case "R":
+			this.right()
+		}
+	}
+	return this.current
 }
 
 func (this *BathroomSecurity) up() {

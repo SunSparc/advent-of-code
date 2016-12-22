@@ -1,32 +1,93 @@
 package day02
 
-// http://adventofcode.com/2016/day/2
 
-type BathroomSecurity struct {}
+type Keypad [3][3]int
+
+type BathroomSecurity struct {
+	keypad Keypad
+	start int
+	current int
+}
 
 func NewBathroomSecurity() *BathroomSecurity {
-	return &BathroomSecurity{}
+	keypad := Keypad{
+		[3]int{1,2,3},
+		[3]int{4,5,6},
+		[3]int{7,8,9},
+	}
+	return &BathroomSecurity{
+		keypad: keypad,
+		start: 5,
+		current: 5,
+	}
 }
+
 
 func (this *BathroomSecurity) PushButtons(instructions string) int {
 	if instructions == "U" {
-		return 2
+		this.up()
+		return this.current
 	} else if instructions == "D" {
-		return 8
+		this.down()
+		return this.current
 	} else if instructions == "L" {
-		return 4
+		this.left()
+		return this.current
 	} else if instructions == "R" {
-		return 6
+		this.right()
+		return this.current
 	} else if instructions == "UL" {
-		return 1
+		this.up()
+		this.left()
+		return this.current
 	} else if instructions == "LU" {
-		return 1
+		this.left()
+		this.up()
+		return this.current
 	} else if instructions == "DL" {
-		return 7
+		this.down()
+		this.left()
+		return this.current
 	} else if instructions == "RU" {
-		return 3
+		this.right()
+		this.up()
+		return this.current
 	} else if instructions == "RD" {
+		this.right()
+		this.down()
 		return 9
 	}
 	return 0
+}
+
+func (this *BathroomSecurity) up() {
+	current := this.current
+	new := current-3
+	if  new > 0 {
+		this.current = new
+	}
+}
+
+func (this *BathroomSecurity) down() {
+	current := this.current
+	new := current+3
+	if new <= 9 {
+		this.current = new
+	}
+}
+
+func (this *BathroomSecurity) left() {
+	current := this.current
+	if current == 1 || current == 4 || current == 7 {
+		return
+	}
+	this.current = current-1
+}
+
+func (this *BathroomSecurity) right() {
+	current := this.current
+	if current == 3 || current == 6 || current == 9 {
+		return
+	}
+	this.current = current+1
 }

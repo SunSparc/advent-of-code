@@ -21,40 +21,49 @@ func (this *Day02Fixture) Setup() {
 	this.security = NewBathroomSecurity()
 }
 
-var buttons int
-
-func (this *Day02Fixture) Test_OneLine_OneCharacterInstructions() {
-	buttons = this.security.PushButtons("")
+func (this *Day02Fixture) Test_OneLine_OneCharacter_Blank() {
+	buttons := this.security.PushButtons("")
 	this.So(buttons, should.Equal, 0)
-
-	buttons = this.security.PushButtons("U")
+}
+func (this *Day02Fixture) Test_OneLine_OneCharacter_Up() {
+	buttons := this.security.PushButtons("U")
 	this.So(buttons, should.Equal, 2)
-
-	buttons = this.security.PushButtons("D")
+}
+func (this *Day02Fixture) Test_OneLine_OneCharacter_Down() {
+	buttons := this.security.PushButtons("D")
 	this.So(buttons, should.Equal, 8)
-
-	buttons = this.security.PushButtons("L")
+}
+func (this *Day02Fixture) Test_OneLine_OneCharacter_Left() {
+	buttons := this.security.PushButtons("L")
 	this.So(buttons, should.Equal, 4)
-
-	buttons = this.security.PushButtons("R")
+}
+func (this *Day02Fixture) Test_OneLine_OneCharacter_Right() {
+	buttons := this.security.PushButtons("R")
 	this.So(buttons, should.Equal, 6)
 }
 
-func (this *Day02Fixture) Test_OneLine_TwoCharacterInstructions() {
-	buttons = this.security.PushButtons("UL")
+func (this *Day02Fixture) Test_OneLine_TwoCharacters_UpLeft() {
+	buttons := this.security.PushButtons("UL")
 	this.So(buttons, should.Equal, 1)
-	buttons = this.security.PushButtons("LU")
+}
+func (this *Day02Fixture) Test_OneLine_TwoCharacters_LeftUp() {
+	buttons := this.security.PushButtons("LU")
 	this.So(buttons, should.Equal, 1)
-
-	buttons = this.security.PushButtons("DL")
+}
+func (this *Day02Fixture) Test_OneLine_TwoCharacters_DownLeft() {
+	buttons := this.security.PushButtons("DL")
 	this.So(buttons, should.Equal, 7)
-
-	buttons = this.security.PushButtons("RU")
+}
+func (this *Day02Fixture) Test_OneLine_TwoCharacters_RightUp() {
+	buttons := this.security.PushButtons("RU")
 	this.So(buttons, should.Equal, 3)
-
-	buttons = this.security.PushButtons("RD")
+}
+func (this *Day02Fixture) Test_OneLine_TwoCharacters_RightDown() {
+	buttons := this.security.PushButtons("RD")
 	this.So(buttons, should.Equal, 9)
 }
+
+// http://adventofcode.com/2016/day/2
 
 // -------------- Design ---------------
 // number pad

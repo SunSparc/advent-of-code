@@ -7,7 +7,6 @@ import (
 	"github.com/smartystreets/gunit"
 )
 
-
 type Day02Fixture struct {
 	*gunit.Fixture
 	security *BathroomSecurity
@@ -27,15 +26,15 @@ func (this *Day02Fixture) Test_OneLine_OneCharacter_Blank() {
 }
 func (this *Day02Fixture) Test_OneLine_OneCharacter_Up() {
 	buttons := this.security.PushButtons("U")
-	this.So(buttons, should.Equal, 2)
+	this.So(buttons, should.Equal, 5)
 }
 func (this *Day02Fixture) Test_OneLine_OneCharacter_Down() {
 	buttons := this.security.PushButtons("D")
-	this.So(buttons, should.Equal, 8)
+	this.So(buttons, should.Equal, 5)
 }
 func (this *Day02Fixture) Test_OneLine_OneCharacter_Left() {
 	buttons := this.security.PushButtons("L")
-	this.So(buttons, should.Equal, 4)
+	this.So(buttons, should.Equal, 5)
 }
 func (this *Day02Fixture) Test_OneLine_OneCharacter_Right() {
 	buttons := this.security.PushButtons("R")
@@ -44,60 +43,102 @@ func (this *Day02Fixture) Test_OneLine_OneCharacter_Right() {
 
 func (this *Day02Fixture) Test_OneLine_TwoCharacters_UpLeft() {
 	buttons := this.security.PushButtons("UL")
-	this.So(buttons, should.Equal, 1)
+	this.So(buttons, should.Equal, 5)
 }
 func (this *Day02Fixture) Test_OneLine_TwoCharacters_LeftUp() {
 	buttons := this.security.PushButtons("LU")
-	this.So(buttons, should.Equal, 1)
+	this.So(buttons, should.Equal, 5)
 }
 func (this *Day02Fixture) Test_OneLine_TwoCharacters_DownLeft() {
 	buttons := this.security.PushButtons("DL")
-	this.So(buttons, should.Equal, 7)
+	this.So(buttons, should.Equal, 5)
 }
 func (this *Day02Fixture) Test_OneLine_TwoCharacters_RightUp() {
 	buttons := this.security.PushButtons("RU")
-	this.So(buttons, should.Equal, 3)
+	this.So(buttons, should.Equal, 2)
 }
 func (this *Day02Fixture) Test_OneLine_TwoCharacters_RightDown() {
 	buttons := this.security.PushButtons("RD")
-	this.So(buttons, should.Equal, 9)
+	this.So(buttons, should.Equal, A)
 }
 
 func (this *Day02Fixture) Test_ManyLines_ManyCharacters() {
 	var buttons int
 
 	buttons = this.security.PushButtons("ULL")
-	this.So(buttons, should.Equal, 1)
+	this.So(buttons, should.Equal, 5)
 
 	buttons = this.security.PushButtons("RRDDD")
-	this.So(buttons, should.Equal, 9)
+	this.So(buttons, should.Equal, D)
 
 	buttons = this.security.PushButtons("LURDL")
-	this.So(buttons, should.Equal, 8)
+	this.So(buttons, should.Equal, B)
 
 	buttons = this.security.PushButtons("UUUUD")
+	this.So(buttons, should.Equal, 3)
+}
+
+func (this *Day02Fixture) Test_TheWholeKeypadInOrder() {
+	var buttons int
+
+	buttons = this.security.PushButtons("RURU")
+	this.So(buttons, should.Equal, 1)
+
+	buttons = this.security.PushButtons("DL")
+	this.So(buttons, should.Equal, 2)
+
+	buttons = this.security.PushButtons("R")
+	this.So(buttons, should.Equal, 3)
+
+	buttons = this.security.PushButtons("R")
+	this.So(buttons, should.Equal, 4)
+
+	buttons = this.security.PushButtons("DLLL")
 	this.So(buttons, should.Equal, 5)
+
+	buttons = this.security.PushButtons("R")
+	this.So(buttons, should.Equal, 6)
+
+	buttons = this.security.PushButtons("R")
+	this.So(buttons, should.Equal, 7)
+
+	buttons = this.security.PushButtons("R")
+	this.So(buttons, should.Equal, 8)
+
+	buttons = this.security.PushButtons("R")
+	this.So(buttons, should.Equal, 9)
+
+	buttons = this.security.PushButtons("LLLD")
+	this.So(buttons, should.Equal, A)
+
+	buttons = this.security.PushButtons("R")
+	this.So(buttons, should.Equal, B)
+
+	buttons = this.security.PushButtons("R")
+	this.So(buttons, should.Equal, C)
+
+	buttons = this.security.PushButtons("LD")
+	this.So(buttons, should.Equal, D)
 }
 
 func (this *Day02Fixture) Test_ThePuzzleInput() {
 	var buttons int
 
 	buttons = this.security.PushButtons("RDLRUUULRRDLRLLRLDDUDLULULDDULUDRRUURLRLLUULDURRULLRULDRRDLLULLRLLDRLDDRRRRLLRLURRRDRDULRDUULDDDULURUDDRRRUULUDRLLUUURLUDRUUUDRDUULLRLLUDDRURRDDDRDLUUURLRLLUDRURDUDUULDDLLRDURULLLURLDURLUUULDULDDULULLLRRUDLRUURDRDLLURLUDULDUUUURRLDLUDRULUDLDLLDRLDDDRRLLDUDLLRRDDDRLUDURLLLDRUDDLDDRRLUDRRDUDLRRLULDULURULDULUULDRLLDRUUDDRLLUDRULLRRRLRDLRLUDLRULDRDLRDRLRULUDUURRUUULLDDDDUDDLDDDDRRULRDLRDDULLDLDLLDLLDLLDRRDDDRDDLRRDDDRLLLLURRDLRRLDRURDDURDULDDRUURUDUDDDRDRDDRLRRLRULLDRLDLURLRLRUDURRRDLLLUDRLRDLLDDDLLUDRLDRRUUDUUDULDULLRDLUDUURLDDRUDR")
-	this.So(buttons, should.Equal, 9)
+	this.So(buttons, should.Equal, C)
 
 	buttons = this.security.PushButtons("URULDDLDDUDLLURLUUUUUULUDRRRDDUDURDRUURLLDRURLUULUDRDRLLDRLDULRULUURUURRLRRDRUUUDLLLLRUDDLRDLLDUDLLRRURURRRUDLRLRLLRULRLRLRDLRLLRRUDDRLRUDULDURDLDLLLRDRURURRULLLDLLRRDRLLDUUDLRUUDDURLLLDUUDLRDDURRDRRULLDRLRDULRRLLRLLLLUDDDRDRULRRULLRRUUDULRRRUDLLUUURDUDLLLURRDDUDLDLRLURDDRRRULRRUDRDRDULURULRUDULRRRLRUDLDDDDRUULURDRRDUDLULLRUDDRRRLUDLRURUURDLDURRDUUULUURRDULLURLRUUUUULULLDRURULDURDDRRUDLRLRRLLLLDDUURRULLURURRLLDRRDDUUDLLUURRDRLLLLRLUDUUUDLRLRRLDURDRURLRLRULURLDULLLRRUUUDLLRRDUUULULDLLDLRRRDUDDLRULLULLULLULRU")
-	this.So(buttons, should.Equal, 2)
+	this.So(buttons, should.Equal, 1)
 
 	buttons = this.security.PushButtons("DURUUDULRRLULLLDDUDDLRRDURURRRDDRRURDRURDRLULDUDUDUULULDDUURDDULRDUDUDRRURDRDDRLDRDRLDULDDULRULLDULURLUUDUDULRDDRRLURLLRRDLLDLDURULUDUDULDRLLRRRUDRRDDDRRDRUUURLDLURDLRLLDUULLRULLDDDDRULRRLRDLDLRLUURUUULRDUURURLRUDRDDDRRLLRLLDLRULUULULRUDLUDULDLRDDDDDRURDRLRDULRRULRDURDDRRUDRUDLUDLDLRUDLDDRUUULULUULUUUDUULDRRLDUDRRDDLRUULURLRLULRURDDLLULLURLUDLULRLRRDDDDDRLURURURDRURRLLLLURLDDURLLURDULURUUDLURUURDLUUULLLLLRRDUDLLDLUUDURRRURRUUUDRULDDLURUDDRRRDRDULURURLLDULLRDDDRRLLRRRDRLUDURRDLLLLDDDDLUUURDDDDDDLURRURLLLUURRUDLRLRRRURULDRRLULD")
-	this.So(buttons, should.Equal, 4)
+	this.So(buttons, should.Equal, A)
 
 	buttons = this.security.PushButtons("LLUUURRDUUDRRLDLRUDUDRLRDLLRDLLDRUULLURLRRLLUDRLDDDLLLRRRUDULDLLLDRLURDRLRRLURUDULLRULLLURRRRRDDDLULURUDLDUDULRRLUDDURRLULRRRDDUULRURRUULUURDRLLLDDRDDLRRULRDRDRLRURULDULRRDRLDRLLDRDURUUULDLLLRDRRRLRDLLUDRDRLURUURDLRDURRLUDRUDLURDRURLRDLULDURDDURUUDRLULLRLRLDDUDLLUUUURLRLRDRLRRRURLRULDULLLLDLRRRULLUUDLDURUUUDLULULRUDDLLDLDLRLDDUDURDRLLRRLRRDDUDRRRURDLRLUUURDULDLURULUDULRRLDUDLDDDUUDRDUULLDDRLRLLRLLLLURDDRURLDDULLULURLRDUDRDDURLLLUDLLLLLUDRDRDLURRDLUDDLDLLDDLUDRRDDLULRUURDRULDDDLLRLDRULURLRURRDDDRLUUDUDRLRRUDDLRDLDULULDDUDURRRURULRDDDUUDULLULDDRDUDRRDRDRDLRRDURURRRRURULLLRRLR")
-	this.So(buttons, should.Equal, 3)
+	this.So(buttons, should.Equal, 8)
 
 	buttons = this.security.PushButtons("URLULLLDRDDULRRLRLUULDRUUULDRRLLDDDLDUULLDRLULRRDRRDDDRRDLRRLLDDRDULLRRLLUDUDDLDRDRLRDLRDRDDUUDRLLRLULLULRDRDDLDDDRLURRLRRDLUDLDDDLRDLDLLULDDRRDRRRULRUUDUULDLRRURRLLDRDRRDDDURUDRURLUDDDDDDLLRLURULURUURDDUDRLDRDRLUUUULURRRRDRDULRDDDDRDLLULRURLLRDULLUUDULULLLLRDRLLRRRLLRUDUUUULDDRULUDDDRRRULUDURRLLDURRDULUDRUDDRUURURURLRDULURDDDLURRDLDDLRUDUUDULLURURDLDURRDRDDDLRRDLLULUDDDRDLDRDRRDRURRDUDRUURLRDDUUDLURRLDRRDLUDRDLURUDLLRRDUURDUDLUDRRL")
-	this.So(buttons, should.Equal, 5)
+	this.So(buttons, should.Equal, 8)
 }
-
 
 // http://adventofcode.com/2016/day/2
 
@@ -154,3 +195,28 @@ func (this *Day02Fixture) Test_ThePuzzleInput() {
 // DURUUDULRRLULLLDDUDDLRRDURURRRDDRRURDRURDRLULDUDUDUULULDDUURDDULRDUDUDRRURDRDDRLDRDRLDULDDULRULLDULURLUUDUDULRDDRRLURLLRRDLLDLDURULUDUDULDRLLRRRUDRRDDDRRDRUUURLDLURDLRLLDUULLRULLDDDDRULRRLRDLDLRLUURUUULRDUURURLRUDRDDDRRLLRLLDLRULUULULRUDLUDULDLRDDDDDRURDRLRDULRRULRDURDDRRUDRUDLUDLDLRUDLDDRUUULULUULUUUDUULDRRLDUDRRDDLRUULURLRLULRURDDLLULLURLUDLULRLRRDDDDDRLURURURDRURRLLLLURLDDURLLURDULURUUDLURUURDLUUULLLLLRRDUDLLDLUUDURRRURRUUUDRULDDLURUDDRRRDRDULURURLLDULLRDDDRRLLRRRDRLUDURRDLLLLDDDDLUUURDDDDDDLURRURLLLUURRUDLRLRRRURULDRRLULD
 // LLUUURRDUUDRRLDLRUDUDRLRDLLRDLLDRUULLURLRRLLUDRLDDDLLLRRRUDULDLLLDRLURDRLRRLURUDULLRULLLURRRRRDDDLULURUDLDUDULRRLUDDURRLULRRRDDUULRURRUULUURDRLLLDDRDDLRRULRDRDRLRURULDULRRDRLDRLLDRDURUUULDLLLRDRRRLRDLLUDRDRLURUURDLRDURRLUDRUDLURDRURLRDLULDURDDURUUDRLULLRLRLDDUDLLUUUURLRLRDRLRRRURLRULDULLLLDLRRRULLUUDLDURUUUDLULULRUDDLLDLDLRLDDUDURDRLLRRLRRDDUDRRRURDLRLUUURDULDLURULUDULRRLDUDLDDDUUDRDUULLDDRLRLLRLLLLURDDRURLDDULLULURLRDUDRDDURLLLUDLLLLLUDRDRDLURRDLUDDLDLLDDLUDRRDDLULRUURDRULDDDLLRLDRULURLRURRDDDRLUUDUDRLRRUDDLRDLDULULDDUDURRRURULRDDDUUDULLULDDRDUDRRDRDRDLRRDURURRRRURULLLRRLR
 // URLULLLDRDDULRRLRLUULDRUUULDRRLLDDDLDUULLDRLULRRDRRDDDRRDLRRLLDDRDULLRRLLUDUDDLDRDRLRDLRDRDDUUDRLLRLULLULRDRDDLDDDRLURRLRRDLUDLDDDLRDLDLLULDDRRDRRRULRUUDUULDLRRURRLLDRDRRDDDURUDRURLUDDDDDDLLRLURULURUURDDUDRLDRDRLUUUULURRRRDRDULRDDDDRDLLULRURLLRDULLUUDULULLLLRDRLLRRRLLRUDUUUULDDRULUDDDRRRULUDURRLLDURRDULUDRUDDRUURURURLRDULURDDDLURRDLDDLRUDUUDULLURURDLDURRDRDDDLRRDLLULUDDDRDLDRDRRDRURRDUDRUURLRDDUUDLURRLDRRDLUDRDLURUDLLRRDUURDUDLUDRRL
+
+// --- Part Two ---
+//
+// You finally arrive at the bathroom (it's a several minute walk from the lobby so visitors can behold the many fancy
+// conference rooms and water coolers on this floor) and go to punch in the code. Much to your bladder's dismay, the
+// keypad is not at all like you imagined it. Instead, you are confronted with the result of hundreds of man-hours of
+// bathroom-keypad-design meetings:
+//
+//     1
+//   2 3 4
+// 5 6 7 8 9
+//   A B C
+//     D
+//
+// You still start at "5" and stop when you're at an edge, but given the same instructions as above, the outcome is
+// very different:
+//
+// - You start at "5" and don't move at all (up and left are both edges), ending at 5.
+// - Continuing from "5", you move right twice and down three times (through "6", "7", "B", "D", "D"), ending at D.
+// - Then, from "D", you move five more times (through "D", "B", "C", "C", "B"), ending at B.
+// - Finally, after five more moves, you end at 3.
+//
+// So, given the actual keypad layout, the code would be 5DB3.
+//
+// Using the same instructions in your puzzle input, what is the correct bathroom code?

@@ -1,6 +1,7 @@
 package main
 
-// package AdventofCode2016
+//package AdventofCode2016
+
 // http://adventofcode.com/2016/day/1
 
 import (
@@ -28,7 +29,6 @@ func main() {
 	startingLocation = Coordinate{0, 0}
 	currentLocation = startingLocation
 	currentOrientation := NORTH
-	// previousLocations = append(previousLocations, startingLocation)
 
 	for _, step := range directions {
 

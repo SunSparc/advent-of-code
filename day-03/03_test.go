@@ -18,43 +18,56 @@ func TestDay03Fixture(t *testing.T) {
 }
 
 func (this *Day03Fixture) Setup() {
-	this.triangle = NewTriangles()
 }
 
 func (this *Day03Fixture) Test_ImpossibleTriangle() {
-	possible := this.triangle.HowManyPossible([][3]int{[3]int{5, 10, 25}})
+	this.triangle = NewTriangles([][3]int{[3]int{5, 10, 25}, {11, 26, 6}, {27, 7, 12}})
+	possible := this.triangle.HowManyPossible()
 	this.So(possible, should.Equal, 0)
 }
 
 func (this *Day03Fixture) Test_PossibleTriangle() {
-	possible := this.triangle.HowManyPossible([][3]int{[3]int{5, 5, 5}})
-	this.So(possible, should.Equal, 1)
+	this.triangle = NewTriangles([][3]int{[3]int{5, 6, 7}, {6, 7, 5}, {7, 5, 6}})
+	possible := this.triangle.HowManyPossible()
+	this.So(possible, should.Equal, 3)
 }
 
-func (this *Day03Fixture) Test_TwoPossibleTriangles() {
-	possible := this.triangle.HowManyPossible([][3]int{[3]int{1, 1, 1}, {2, 2, 2}})
+func (this *Day03Fixture) Test_ThreePossibleTriangles() {
+	this.triangle = NewTriangles([][3]int{[3]int{1, 2, 3}, {1, 2, 3}, {1, 2, 3}})
+	possible := this.triangle.HowManyPossible()
+	this.So(possible, should.Equal, 3)
+}
+
+func (this *Day03Fixture) Test_TwoValidOneInvalid() {
+	this.triangle = NewTriangles([][3]int{[3]int{3, 10, 5}, {4,11,6}, {5,40,7}})
+	possible := this.triangle.HowManyPossible()
 	this.So(possible, should.Equal, 2)
 }
 
-func (this *Day03Fixture) Test_OneValidOneInvalid() {
-	possible := this.triangle.HowManyPossible([][3]int{[3]int{3, 4, 5}, {10, 11, 40}})
-	this.So(possible, should.Equal, 1)
-}
-
-func (this *Day03Fixture) Test_TwoInvalid() {
-	possible := this.triangle.HowManyPossible([][3]int{[3]int{1, 14, 19}, {12, 13, 50}})
+func (this *Day03Fixture) Test_ThreeInvalid() {
+	this.triangle = NewTriangles([][3]int{[3]int{1, 14, 19}, {12, 13, 50}, {6,1,99}})
+	possible := this.triangle.HowManyPossible()
 	this.So(possible, should.Equal, 0)
 }
 
-func (this *Day03Fixture) Test_FourMixedTrickTriangles() {
-	listOfTriangles := [][3]int{[3]int{810, 69, 10}, {787, 2, 16}, {545, 626, 626}, {84, 910, 149}}
-	possible := this.triangle.HowManyPossible(listOfTriangles)
+func (this *Day03Fixture) Test_ThreeMixedTrickTriangles() {
+	this.triangle = NewTriangles([][3]int{[3]int{810, 69, 10}, {787, 2, 16}, {545, 626, 626}})
+	possible := this.triangle.HowManyPossible()
+	this.So(possible, should.Equal, 1)
+}
+
+// Part 2
+
+func (this *Day03Fixture) Test_ReadAllOfColumnOne() {
+	this.triangle = NewTriangles([][3]int{[3]int{810, 69, 10}, {787, 2, 16}, {545, 626, 626}})
+	possible := this.triangle.HowManyPossible()
 	this.So(possible, should.Equal, 1)
 }
 
 func (this *Day03Fixture) Test_EasterBunnyTriangles() {
-	possible := this.triangle.HowManyPossible(EasterBunnyTriangles)
-	this.So(possible, should.Equal, 869)
+	this.triangle = NewTriangles(EasterBunnyTriangles)
+	possible := this.triangle.HowManyPossible()
+	this.So(possible, should.Equal, 1544)
 }
 
 // http://adventofcode.com/2016/day/3
@@ -76,7 +89,25 @@ func (this *Day03Fixture) Test_EasterBunnyTriangles() {
 // In your puzzle input, how many of the listed triangles are possible?
 //
 
-var EasterBunnyTriangles = [][3]int{[3]int{810, 679, 10},
+// --- Part Two ---
+//
+// Now that you've helpfully marked up their design documents, it occurs to you that triangles are specified in groups
+// of three vertically. Each set of three numbers in a column specifies a triangle. Rows are unrelated.
+//
+// For example, given the following specification, numbers with the same hundreds digit would be part of the same
+// triangle:
+//
+// 101 301 501
+// 102 302 502
+// 103 303 503
+// 201 401 601
+// 202 402 602
+// 203 403 603
+//
+// In your puzzle input, and instead reading by columns, how many of the listed triangles are possible?
+
+var EasterBunnyTriangles = [][3]int{
+	[3]int{810, 679, 10},
 	{783, 255, 616},
 	{545, 626, 626},
 	{84, 910, 149},

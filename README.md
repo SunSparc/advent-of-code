@@ -1,2 +1,2 @@
-# advent-of-code-2016
-My solutions to the 2016 Advent of Code challenges
+# advent-of-code
+My solutions to the Advent of Code challenges

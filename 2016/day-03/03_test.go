@@ -3,7 +3,6 @@ package day_03
 import (
 	"testing"
 
-	//"github.com/smartystreets/assertions/should"
 	"github.com/smartystreets/assertions/should"
 	"github.com/smartystreets/gunit"
 )

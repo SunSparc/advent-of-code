@@ -21,29 +21,38 @@ var input = [][]int{
 	{6151, 5857, 4865, 437, 6210, 237, 37, 410, 544, 214, 233, 6532, 2114, 207, 5643, 6852},
 }
 var inputTest = [][]int{
-	{5, 1, 9, 5},
-	{7, 5, 3},
-	{2, 4, 6, 8},
+	{5, 9, 2, 8},
+	{9, 4, 7, 3},
+	{3, 8, 6, 5},
 }
 
 func main() {
 	var checksum int
 	for _, row := range input {
 
-		//fmt.Println("row:", row)
-		var low, high int = 0, 0
+		var divSum int
 		for _, value := range row {
 
-			if value > high {
-				high = value
+			for x := 0; x < len(row); x++ {
+				if row[x] == value {
+					continue
+				}
+				mod := -1
+				div := -1
+				if x > value {
+					mod = row[x] % value
+					div = row[x] / value
+				} else {
+					mod = value % row[x]
+					div = value / row[x]
+				}
+				if mod == 0 {
+					divSum = div
+				}
 			}
-			if low == 0 || value < low {
-				low = value
-			}
-			//fmt.Printf("low: %v, high: %v\n", low, high)
 		}
 
-		checksum = checksum + (high - low)
+		checksum = checksum + divSum
 	}
 	fmt.Println("checksum:", checksum)
 }

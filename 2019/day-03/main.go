@@ -9,6 +9,7 @@ import (
 
 type coordinate struct {
 	x, y int
+	runningTotal int
 }
 
 func main() {
@@ -28,8 +29,9 @@ func main() {
 	wireOnePath := pathFinder(wireOne)
 	wireTwoPath := pathFinder(wireTwo)
 
-	matches := findMatchingCoordinates(wireOnePath, wireTwoPath)
-	fmt.Println("closest distance to central port:", closestToZero(matches))
+	matchesDistance, matchesSteps := findMatchingCoordinates(wireOnePath, wireTwoPath)
+	fmt.Println("closest distance to central port:", closestToZero(matchesDistance))
+	fmt.Println("fewest combined steps:", closestToZero(matchesSteps))
 }
 
 func closestToZero(list []int) int {
@@ -48,26 +50,29 @@ func closestToZero(list []int) int {
 	return closest
 }
 
-func findMatchingCoordinates(wireOnePath, wireTwoPath []coordinate) []int {
-	var matches []int
+func findMatchingCoordinates(wireOnePath, wireTwoPath []coordinate) ([]int,[]int) {
+	var runningTotalDistanceOfMatches []int
+	var combinedStepsToMatches []int
 	for _,w1p := range wireOnePath {
 		for _,w2p := range wireTwoPath {
-			if w1p == w2p {
+			if w1p.x == w2p.x && w1p.y == w2p.y {
+				fmt.Println("match:", w1p, w2p)
 				if w1p.x < 0 {
 					w1p.x = -w1p.x
 				}
 				if w1p.y < 0 {
 					w1p.y = -w1p.y
 				}
-				matches = append(matches, w1p.x + w1p.y)
+				runningTotalDistanceOfMatches = append(runningTotalDistanceOfMatches, w1p.x + w1p.y)
+				combinedStepsToMatches = append(combinedStepsToMatches, w1p.runningTotal+w2p.runningTotal)
 			}
 		}
 	}
-	return matches
+	return runningTotalDistanceOfMatches, combinedStepsToMatches
 }
 
 func pathFinder(input []string) []coordinate {
-	path := []coordinate{{0, 0}}
+	path := []coordinate{{0, 0, 0}}
 	for _, vector := range input {
 		direction := vector[0]
 		magnitude, _ := strconv.Atoi(vector[1:])
@@ -92,6 +97,7 @@ func travelUp(path []coordinate, magnitude int) []coordinate {
 		path = append(path, coordinate{
 			x: path[len(path)-1].x,
 			y: path[len(path)-1].y + 1,
+			runningTotal: path[len(path)-1].runningTotal+1,
 		})
 	}
 	return path
@@ -101,6 +107,7 @@ func travelLeft(path []coordinate, magnitude int) []coordinate {
 		path = append(path, coordinate{
 			x: path[len(path)-1].x-1,
 			y: path[len(path)-1].y,
+			runningTotal: path[len(path)-1].runningTotal+1,
 		})
 	}
 	return path
@@ -110,6 +117,7 @@ func travelRight(path []coordinate, magnitude int) []coordinate {
 		path = append(path, coordinate{
 			x: path[len(path)-1].x + 1,
 			y: path[len(path)-1].y,
+			runningTotal: path[len(path)-1].runningTotal+1,
 		})
 	}
 	return path
@@ -119,6 +127,7 @@ func travelDown(path []coordinate, magnitude int) []coordinate {
 		path = append(path, coordinate{
 			x: path[len(path)-1].x,
 			y: path[len(path)-1].y - 1,
+			runningTotal: path[len(path)-1].runningTotal+1,
 		})
 	}
 	return path

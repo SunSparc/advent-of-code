@@ -22,7 +22,6 @@ func main() {
 		if !foundDecreasingDigits(digits) && foundAdjacentDigits(digits) {
 			countOfPpossiblePasswords = countOfPpossiblePasswords + 1
 		}
-		break
 	}
 	fmt.Println("count of possible passwords:", countOfPpossiblePasswords)
 }

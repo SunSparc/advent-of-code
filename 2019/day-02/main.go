@@ -1,5 +1,14 @@
 package main
 
+// opcodes:
+//   1: add; three parameters
+//      add numbers from two positions, store result in third position
+//      eg "1,2,3,4" means add value from position 2 to value from position 3, store result in position 4
+//   2: multiply; three parameters
+//      same as 1, except multiply instead of add
+//  99: end program; no parameters
+// pointer==cursor
+
 import (
 	"fmt"
 	"io/ioutil"
@@ -32,4 +41,5 @@ func main() {
 		}
 	}
 	fmt.Println(input[0])
+	// part 02: determine what pair of inputs produces the output 19690720
 }

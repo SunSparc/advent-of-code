@@ -44,7 +44,7 @@ func (this *Main) TestInputCanBeProcessed() {
 	input := loadInput("input_test")
 	this.So(input, should.HaveSameTypeAs, []string{""})
 	answer := processInput(input)
-	this.So(answer, should.Equal, 157)
+	this.So(answer, should.Equal, 70)
 }
 
 func (this *Main) TestSplitStringIntoTwoEqualParts() {
@@ -54,30 +54,16 @@ func (this *Main) TestSplitStringIntoTwoEqualParts() {
 }
 
 func (this *Main) TestFindCommonLetter() {
-	string1 := "vJrwpWtwJgWr"
-	string2 := "hcsFMMfFFhFp"
-	common := findCommonLetter(string1, string2)
-	this.So(common, should.Equal, 'p')
-	string1 = "jqHRNqRjqzjGDLGL"
-	string2 = "rsFMfFZSrLrFZsSL"
-	common = findCommonLetter(string1, string2)
-	this.So(common, should.Equal, 'L')
-	string1 = "PmmdzqPrV"
-	string2 = "vPwwTWBwg"
-	common = findCommonLetter(string1, string2)
-	this.So(common, should.Equal, 'P')
-	string1 = "wMqvLMZHhHMvwLH"
-	string2 = "jbvcjnnSBnvTQFn"
-	common = findCommonLetter(string1, string2)
-	this.So(common, should.Equal, 'v')
-	string1 = "ttgJtRGJ"
-	string2 = "QctTZtZT"
-	common = findCommonLetter(string1, string2)
-	this.So(common, should.Equal, 't')
-	string1 = "CrZsJsPPZsGz"
-	string2 = "wwsLwLmpwMDw"
-	common = findCommonLetter(string1, string2)
-	this.So(common, should.Equal, 's')
+	string1 := "vJrwpWtwJgWrhcsFMMfFFhFp"
+	string2 := "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL"
+	string3 := "PmmdzqPrVvPwwTWBwg"
+	common := findCommonLetter(string1, string2, string3)
+	this.So(common, should.Equal, 'r')
+	string1 = "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn"
+	string2 = "ttgJtRGJQctTZtZT"
+	string3 = "CrZsJsPPZsGzwwsLwLmpwMDw"
+	common = findCommonLetter(string1, string2, string3)
+	this.So(common, should.Equal, 'Z')
 }
 
 func (this *Main) TestMatchLettersToNumbers() {

@@ -12,12 +12,19 @@ func main() {
 
 func processInput(input []string) int32 {
 	var answer int32
+	var groupOfThree [3]string
+	groupIndex := 0
 	for _, v := range input {
-		parts := splitStringIntoTwo(v)
-		commonLetter := findCommonLetter(parts[0], parts[1])
-
-		numberOfLetter := convertLetterToNumber(commonLetter)
-		answer = answer + numberOfLetter
+		// get 3 lines
+		groupOfThree[groupIndex] = v
+		if groupIndex == 2 {
+			commonLetter := findCommonLetter(groupOfThree[0], groupOfThree[1], groupOfThree[2])
+			log.Printf("commonLetter: %v(%v)", commonLetter, string(commonLetter))
+			numberOfLetter := convertLetterToNumber(commonLetter)
+			answer = answer + numberOfLetter
+			groupIndex = 0
+		}
+		groupIndex = groupIndex + 1
 	}
 	return answer
 }
@@ -34,14 +41,19 @@ func convertLetterToNumber(letter rune) (convertedLetter int32) {
 	return -1
 }
 
-func findCommonLetter(string1, string2 string) (common rune) {
+func findCommonLetter(string1, string2, string3 string) (common rune) {
 	for _, l1 := range string1 {
 		for _, l2 := range string2 {
-			if l1 == l2 {
-				return l1
+			for _, l3 := range string3 {
+				if l1 == l2 && l2 == l3 {
+					log.Printf("l1: %v(%s), l2: %v(%s), l3: %v(%s)", l1, string(l1), l2, string(l2), l3, string(l3))
+					//log.Println("found it:", l1, l2, l3)
+					return l1
+				}
 			}
 		}
 	}
+	log.Fatalln("no common letters found:", common)
 	return common
 }
 
